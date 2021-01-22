@@ -59,6 +59,10 @@ def refresh_data():
     df = pandas.read_csv(url)
     today = date.today()
 
+    # fix error on 'tamponi' at 17 december 2020,  index at 297
+    # Issue: https://github.com/pcm-dpc/COVID-19/issues/998#issuecomment-749108556
+    df.loc[df.index[297], 'tamponi'] = 24749375
+
     # data calculation
     df['nuovi_decessi'] = df.deceduti.diff().fillna(df.deceduti)
 
